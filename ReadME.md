@@ -1,6 +1,9 @@
 Project Description:
 | Use learned concepts of JavaScript to create a calculator application with HTML, CSS and JavaScript. Follow the latest ES6/ES7 syntax learned above. Kindly don’t waste your time on making the calculator visually appealing. Focus only on implementing the requirements.
 
+Deployed Link:
+https://62f38c1c8a2c4f2715f1bd9d--endearing-daifuku-eb7123.netlify.app/
+
 Modules:
 1. Expressions:
     | The calculator should be able to parse full expressions using mathematical rules.
