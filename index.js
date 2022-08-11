@@ -1,7 +1,10 @@
+const PI = 3.1415
+const e = 2.7182
+
 function values(el){
     let x = document.getElementById("answer");
     var old = x.value;
-    if (!parseInt(el.value)){
+    if (!parseInt(el.value) && parseInt(el.value) !== 0){
         x.value = old + " " + el.value + " ";
     }
     else{
@@ -10,37 +13,50 @@ function values(el){
 }
 
 function calculate(){
-    var x = document.getElementById("answer").value;
-    var array = x.split(" ")
+    var x = document.getElementById("answer");
+    var array = x.value.split(" ")
     var temp = array.shift()
-    var temp2 = null
-    if (!temp){
-        temp = array.shift();
-    }
-    if (temp === 'sqrt' || temp === 'sin' || temp === 'cos' || temp === 'tan'){
-        temp2 = array.shift();
-        temp = specialSwitchCase(temp, parseInt(temp2))
-    }
+    temp = isNull(temp, array)
+    temp = isSpecialCase(temp, array)
     console.log(array)
     var calculation = switchCases(0, "+", parseInt(temp))
     while (array.length != 0){
         var sign = array.shift();
         var num = array.shift();
-        if (!num){
-            num = array.shift();
-        }
-        if (num === 'sqrt' || num === 'sin' || num === 'cos' || num === 'tan'){
-            temp = array.shift();
-            num = specialSwitchCase(num, parseInt(temp))
-        }
+        num = isNull(num, array)
+        num = isSpecialCase(num, array)
         calculation = switchCases(calculation, sign, parseInt(num))
     }
-    var y = document.getElementById("answer");
-    var old = y.value;
+    var old = x.value;
     description = old + " = " + calculation;
-    y.value = description
+    x.value = description
+    displayHistory(description)
+}
 
-    // var historyHandler = document.getElementById("hist")
+function isSpecialCase(num, array){
+    if (num === 'sqrt' || num === 'sin' || num === 'cos' || num === 'tan'){
+        temp = array.shift();
+        num = specialSwitchCase(num, parseInt(temp))
+        return num;
+    }
+    else{
+        return num;
+    }
+}
+
+function displayHistory(description){
+    var oldDescription = document.getElementById("hist").innerHTML
+    document.getElementById("hist").innerHTML = description + "<br/>" + oldDescription
+}
+
+function isNull(temp, array){
+    if (!temp){
+        temp = array.shift();
+        return temp;
+    }
+    else {
+        return temp;
+    }
 }
 
 function specialSwitchCase(oper, num){
@@ -48,15 +64,16 @@ function specialSwitchCase(oper, num){
     switch (oper){
         case 'sqrt':
             console.log(Math.sqrt(num))
-            return Math.sqrt(num)
+            return Math.sqrt(num).toFixed(4)
 
         case 'sin':
-            return Math.sin(num)
+            return parseFloat(Math.sin(num).toFixed(4))
         
         case 'cos':
             return Math.cos(num)
 
         case 'tan':
+            console.log(Math.tan(num))
             return Math.tan(num)
 
         default:
@@ -73,10 +90,10 @@ function switchCases(calculatedAnswer, oper, num){
             return calculatedAnswer - num
 
         case '*':
-            return calculatedAnswer * num
+            return (calculatedAnswer * num)
 
         case '/':
-            return calculatedAnswer / num
+            return (calculatedAnswer / num)
 
         case '^':
             return calculatedAnswer ** num
@@ -86,8 +103,9 @@ function switchCases(calculatedAnswer, oper, num){
     }
 }
 
-function clear(){
-    
+function clearConsole(el){
+    var x = document.getElementById("answer");
+    x.value = ''
 }
 
 // function values(el) {
