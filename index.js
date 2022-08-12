@@ -1,5 +1,7 @@
 const PI = 3.1415
 const e = 2.7182
+const variable = {}
+const variableExist = false;
 
 function values(el){
     let x = document.getElementById("answer");
@@ -16,9 +18,13 @@ function calculate(){
     var x = document.getElementById("answer");
     var array = x.value.split(" ")
     var temp = array.shift()
+    // variableVal = isVariable(temp, array)
+    // if (temp !== variableVal){
+    //     variableExist = true;
+    //     variable.variableVal = 0
+    // }
     temp = isNull(temp, array)
-    temp = isSpecialCase(temp, array)
-    console.log(array)
+    temp = parseFloat(isSpecialCase(temp, array))
     var calculation = switchCases(0, "+", parseInt(temp))
     while (array.length != 0){
         var sign = array.shift();
@@ -27,16 +33,25 @@ function calculate(){
         num = isSpecialCase(num, array)
         calculation = switchCases(calculation, sign, parseInt(num))
     }
+    if (variableExist){
+        variable.variableVal = calculation;
+    }
     var old = x.value;
     description = old + " = " + calculation;
     x.value = description
     displayHistory(description)
 }
 
+// function isVariable(temp, array){
+//     if (typeof(temp) === String && temp !== 'cos' && temp !== 'tan' && temp !== 'sin' && temp != 'PI' && temp !== 'E'){
+//         return temp
+//     }
+// }
+
 function isSpecialCase(num, array){
-    if (num === 'sqrt' || num === 'sin' || num === 'cos' || num === 'tan'){
+    if (num === 'sqrt' || num === 'sin' || num === 'cos' || num === 'tan' || num === "PI" || num ==="E" ){
         temp = array.shift();
-        num = specialSwitchCase(num, parseInt(temp))
+        num = specialSwitchCase(num, temp)
         return num;
     }
     else{
@@ -61,20 +76,25 @@ function isNull(temp, array){
 
 function specialSwitchCase(oper, num){
     console.log(num)
+    num = parseInt(num)
     switch (oper){
         case 'sqrt':
-            console.log(Math.sqrt(num))
             return Math.sqrt(num).toFixed(4)
 
         case 'sin':
-            return parseFloat(Math.sin(num).toFixed(4))
+            return Math.sin(num).toFixed(4)
         
         case 'cos':
-            return Math.cos(num)
+            return Math.cos(num).toFixed(4)
 
         case 'tan':
-            console.log(Math.tan(num))
-            return Math.tan(num)
+            return Math.tan(num).toFixed(4)
+
+        case 'PI':
+            return (PI*num).toFixed(4)
+
+        case 'E':
+            return (e*num).toFixed(4)
 
         default:
             return num
