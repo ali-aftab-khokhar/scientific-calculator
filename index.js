@@ -3,6 +3,8 @@ const constants = {
     'e' : 2.7182
 }
 const variable = {}
+var variableExists = false
+var varEntry = null
 var elements = []
 var operators = []
 var mOperator = []
@@ -32,20 +34,25 @@ function calculate(){
         else if (elem === ''){
             console.log("Undefined Entry")
         }
-        // else if (Object.keys(constants).includes(elem)){
-        //     elements.push(parseFloat(constants[elem]))
-        // }
+        else if (Object.keys(constants).includes(elem)){
+                elements.push(parseFloat(constants[elem]))
+        }
+        else if (Object.keys(variable).includes(elem)){
+                elements.push(parseFloat(variable[elem]))
+        }
+        else if (elem.includes("=")){
+            variableExists = true
+            varEntry = elem
+            varEntry = varEntry.replace(/.$/, '')
+            variable.elem = 0
+        }
         else{
             operators.push(elem)
         }
     });
 
-    // console.log(elements)
-    // console.log(operators)
-
     while (operators.includes("(")){
         //Solving Paranthesis
-        console.log(elements)
         solvingParanthesis(operators, elements)
     }
 
@@ -57,10 +64,7 @@ function calculate(){
     calculateByDMAS("/", operators, elements)
     calculateByDMAS("*", operators, elements)
     calculateByDMAS("+", operators, elements)
-    calculateByDMAS("-", operators, elements)   
-
-    // console.log(elements, 'elements')
-    // console.log(operators, 'operators')
+    calculateByDMAS("-", operators, elements)
 
     //Displaying On Console
     var tempHist = x.value
@@ -72,6 +76,7 @@ function calculate(){
         x.value = calculatedAnswer
     }
     elements = []
+    variable[varEntry] = calculatedAnswer
     displayHistory(tempHist + " = " + calculatedAnswer.toFixed(4))
 
 }
@@ -153,16 +158,6 @@ function displayHistory(description){
     document.getElementById("hist").innerHTML = description + "<br/>" + oldDescription
 }
 
-function isNull(temp, array){
-    if (!temp){
-        temp = array.shift();
-        return temp;
-    }
-    else {
-        return temp;
-    }
-}
-
 function specialSwitchCase(oper, num){
     console.log(oper, num)
     switch (oper){
@@ -180,28 +175,6 @@ function specialSwitchCase(oper, num){
 
         default:
             return num
-    }
-}
-
-function switchCases(calculatedAnswer, oper, num){
-    switch (oper){
-        case '+':
-            return calculatedAnswer + num
-
-        case '-':
-            return calculatedAnswer - num
-
-        case '*':
-            return (calculatedAnswer * num)
-
-        case '/':
-            return (calculatedAnswer / num)
-
-        case '^':
-            return calculatedAnswer ** num
-
-        default:
-            return calculatedAnswer
     }
 }
 
