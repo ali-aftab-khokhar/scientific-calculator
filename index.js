@@ -84,37 +84,46 @@ function calculate(){
 function solvingParanthesis(operators, elements){
     var opening = 0
     var closing = 0
-    console.log(elements)
-    console.log(operators)
     var i
     for (i = 0; i < operators.length; i += 1){
         if (operators[i] === '('){
             opening = i
         }
-        if (operators[i] === ')'){
+    }
+    for (i = opening; i < operators.length; i += 1){
+        if (operators[i] == ')'){
             closing = i
+            miniArray(opening, closing)
         }
     }
-    miniArray(opening, closing)
+    // miniArray(opening, closing)
 }
 
 function miniArray(opening, closing){
     mOperator = operators.splice(opening, closing - 1)
+    console.log(mOperator)
+    mOperator.shift()
+    mOperator.pop()
     mElments = elements.splice(opening, closing - 2)
+    console.log(mOperator, mElments)
 
     //Solving Single Valued Operator
     solvingSingleValuedOperator(mOperator, mElments)
 
     //By DMAS Law
-    calculateByDMAS("^", mOperator, mElments,closing)
-    calculateByDMAS("/", mOperator, mElments,closing)
-    calculateByDMAS("*", mOperator, mElments,closing)
-    calculateByDMAS("+", mOperator, mElments,closing)
-    calculateByDMAS("-", mOperator, mElments,closing)
+    calculateByDMAS("^", mOperator, mElments)
+    calculateByDMAS("/", mOperator, mElments)
+    calculateByDMAS("*", mOperator, mElments)
+    calculateByDMAS("+", mOperator, mElments)
+    calculateByDMAS("-", mOperator, mElments)
 
-    elements.splice(opening - 1, 0, mElments.shift())
+    console.log(mElments)
+    elements.splice(opening, 0, mElments.shift())
     console.log(elements)
-    console.log(operators)
+    // elements.splice(opening, closing, mElments.shift())
+    // console.log(elements)
+    // console.log(elements)
+    // console.log(operators)
 }
 
 function solvingSingleValuedOperator(operators, elements){
@@ -129,26 +138,31 @@ function solvingSingleValuedOperator(operators, elements){
     }
 }
 
-function calculateByDMAS(oper, operators, elements, closing = 2){
-    for (i = 0; i < operators.length; i++){
-        if (operators[i] === oper){
-            if (oper === '/'){
-                tempVal = elements[i] / elements[i+1]
+function calculateByDMAS(oper, operators, elements){
+    while(operators.includes(oper)){
+        for (i = 0; i < operators.length; i++){
+            if (operators[i] === oper){
+                if (oper === '/'){
+                    tempVal = elements[i] / elements[i+1]
+                }
+                else if (oper === '*'){
+                    tempVal = elements[i] * elements[i+1]
+                }
+                else if (oper === '+'){
+                    tempVal = elements[i] + elements[i+1]
+                }
+                else if (oper === '-'){
+                    tempVal = elements[i] - elements[i+1]
+                }
+                else if (oper === '^'){
+                    tempVal = elements[i] ** elements[i+1]
+                }
+                elements.splice(i, 2, tempVal)
+                operators.splice(i, 1)
+    
+                console.log(elements)
+                console.log(operators)
             }
-            else if (oper === '*'){
-                tempVal = elements[i] * elements[i+1]
-            }
-            else if (oper === '+'){
-                tempVal = elements[i] + elements[i+1]
-            }
-            else if (oper === '-'){
-                tempVal = elements[i] - elements[i+1]
-            }
-            else if (oper === '^'){
-                tempVal = elements[i] ** elements[i+1]
-            }
-            elements.splice(i, closing, tempVal)
-            operators.splice(i, 1)
         }
     }
 }
