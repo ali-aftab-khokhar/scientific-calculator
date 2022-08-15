@@ -51,3 +51,7 @@ input[type=text]{
     height: 100px;
     padding: 10px;
 }
+
+li {
+    display: flex;
+}

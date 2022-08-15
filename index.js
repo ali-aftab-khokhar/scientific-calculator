@@ -24,6 +24,7 @@ function values(el){
 function calculate(){
     var x = document.getElementById("answer");
     var array = x.value.split(" ")
+    array = array.filter(n => n)
     console.log(array)
 
     //Elements Array
@@ -50,6 +51,8 @@ function calculate(){
             operators.push(elem)
         }
     });
+
+    console.log(operators, elements)
 
     while (operators.includes("(")){
         //Solving Paranthesis
@@ -83,28 +86,37 @@ function calculate(){
 
 function solvingParanthesis(operators, elements){
     var opening = 0
+    var elemOpenCount = 0
     var closing = 0
     var i
     for (i = 0; i < operators.length; i += 1){
         if (operators[i] === '('){
             opening = i
         }
+        else if (elemOpenCount < opening && operators[i] !== '(' && operators !== ")"){
+            elemOpenCount += 1
+        }
     }
     for (i = opening; i < operators.length; i += 1){
         if (operators[i] == ')'){
             closing = i
-            miniArray(opening, closing)
+            miniArray(opening, closing, elemOpenCount - 1)
         }
     }
-    // miniArray(opening, closing)
 }
 
-function miniArray(opening, closing){
+function miniArray(opening, closing, elemOpenCount){
+    console.log(opening - 1, closing)
     mOperator = operators.splice(opening, closing - 1)
     console.log(mOperator)
-    mOperator.shift()
-    mOperator.pop()
-    mElments = elements.splice(opening, closing - 2)
+    if (mOperator[0] === '('){
+        mOperator.shift()
+    }
+    if (mOperator[mOperator.length - 1] === ')' || mOperator[mOperator.length - 1] === ''){
+        mOperator.pop()
+    }
+    console.log(elements, 'elements')
+    mElments = elements.splice(elemOpenCount, closing - opening)
     console.log(mOperator, mElments)
 
     //Solving Single Valued Operator
@@ -118,12 +130,8 @@ function miniArray(opening, closing){
     calculateByDMAS("-", mOperator, mElments)
 
     console.log(mElments)
-    elements.splice(opening, 0, mElments.shift())
+    elements.splice(opening - 1, 0, mElments.shift())
     console.log(elements)
-    // elements.splice(opening, closing, mElments.shift())
-    // console.log(elements)
-    // console.log(elements)
-    // console.log(operators)
 }
 
 function solvingSingleValuedOperator(operators, elements){
@@ -168,8 +176,23 @@ function calculateByDMAS(oper, operators, elements){
 }
 
 function displayHistory(description){
-    var oldDescription = document.getElementById("hist").innerHTML
-    document.getElementById("hist").innerHTML = description + "<br/>" + oldDescription
+    var ul = document.getElementById("list")
+    var li = document.createElement("li")
+    li.id = description
+    li.addEventListener("click", EditData, false)
+    li.appendChild(document.createTextNode(description))
+    ul.appendChild(li)
+}
+
+function EditData(){
+    let foo = prompt("Type 1 for edit, 2 for delete")
+    if (foo === "1"){
+        let x = document.getElementById("answer");
+        x.value = this.id
+    }
+    if (foo === "2"){
+        this.remove()
+    }
 }
 
 function specialSwitchCase(oper, num){
