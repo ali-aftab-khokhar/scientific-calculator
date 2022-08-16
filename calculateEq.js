@@ -37,8 +37,8 @@ function calculate(){
     calculateByDMAS("^", operators, elements)
     calculateByDMAS("/", operators, elements)
     calculateByDMAS("*", operators, elements)
-    calculateByDMAS("+", operators, elements)
-    calculateByDMAS("-", operators, elements)
+    calcAddAndSub(operators, elements)
+    calcAddAndSub(operators, elements)
 
     //Displaying On Console
     var tempHist = x.value
