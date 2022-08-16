@@ -19,9 +19,6 @@ function calculateByDMAS(oper, operators, elements){
                 }
                 elements.splice(i, 2, tempVal)
                 operators.splice(i, 1)
-    
-                console.log(elements)
-                console.log(operators)
             }
         }
     }

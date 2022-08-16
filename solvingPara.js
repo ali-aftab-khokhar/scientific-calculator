@@ -20,18 +20,14 @@ function solvingParanthesis(operators, elements){
 }
 
 function miniArray(opening, closing, elemOpenCount){
-    console.log(opening - 1, closing)
     mOperator = operators.splice(opening, closing - 1)
-    console.log(mOperator)
     if (mOperator[0] === '('){
         mOperator.shift()
     }
     if (mOperator[mOperator.length - 1] === ')' || mOperator[mOperator.length - 1] === ''){
         mOperator.pop()
     }
-    console.log(elements, 'elements')
     mElments = elements.splice(elemOpenCount, closing - opening)
-    console.log(mOperator, mElments)
 
     //Solving Single Valued Operator
     solvingSingleValuedOperator(mOperator, mElments)
@@ -43,7 +39,5 @@ function miniArray(opening, closing, elemOpenCount){
     calculateByDMAS("+", mOperator, mElments)
     calculateByDMAS("-", mOperator, mElments)
 
-    console.log(mElments)
     elements.splice(opening - 1, 0, mElments.shift())
-    console.log(elements)
 }

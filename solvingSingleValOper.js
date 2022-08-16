@@ -11,7 +11,6 @@ function solvingSingleValuedOperator(operators, elements){
 }
 
 function specialSwitchCase(oper, num){
-    console.log(oper, num)
     switch (oper){
         case 'sqrt':
             return parseFloat(Math.sqrt(num).toFixed(4))

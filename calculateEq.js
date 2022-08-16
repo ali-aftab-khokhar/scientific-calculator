@@ -2,7 +2,6 @@ function calculate(){
     var x = document.getElementById("answer");
     var array = x.value.split(" ")
     array = array.filter(n => n)
-    console.log(array)
 
     //Elements Array
     array.forEach(elem => {
@@ -25,8 +24,6 @@ function calculate(){
             operators.push(elem)
         }
     });
-
-    console.log(operators, elements)
 
     while (operators.includes("(")){
         //Solving Paranthesis
