@@ -1,8 +1,8 @@
 function solvingSingleValuedOperator(operators, elements){
-    var i
+    let i
     for (i = 0; i < operators.length; i++){
         if (operators[i] === 'sqrt' || operators[i] === 'sin' || operators[i] === 'cos' || operators[i] === 'tan'){
-            var tempVal = 0;
+            let tempVal = 0;
             tempVal = specialSwitchCase(operators[i], elements[i])
             elements[i] = tempVal
             operators.splice(i, 1)

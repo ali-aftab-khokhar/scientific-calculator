@@ -1,8 +1,8 @@
 function solvingParanthesis(operators, elements){
-    var opening = 0
-    var elemOpenCount = 0
-    var closing = 0
-    var i
+    let opening = 0
+    let elemOpenCount = 0
+    let closing = 0
+    let i
     for (i = 0; i < operators.length; i += 1){
         if (operators[i] === '('){
             opening = i
@@ -20,24 +20,24 @@ function solvingParanthesis(operators, elements){
 }
 
 function miniArray(opening, closing, elemOpenCount){
-    mOperator = operators.splice(opening, closing - 1)
-    if (mOperator[0] === '('){
-        mOperator.shift()
+    miniOperatorList = operators.splice(opening, closing - 1)
+    if (miniOperatorList[0] === '('){
+        miniOperatorList.shift()
     }
-    if (mOperator[mOperator.length - 1] === ')' || mOperator[mOperator.length - 1] === ''){
-        mOperator.pop()
+    if (miniOperatorList[miniOperatorList.length - 1] === ')' || miniOperatorList[miniOperatorList.length - 1] === ''){
+        miniOperatorList.pop()
     }
-    mElments = elements.splice(elemOpenCount, closing - opening)
+    miniElementList = elements.splice(elemOpenCount, closing - opening)
 
     //Solving Single Valued Operator
-    solvingSingleValuedOperator(mOperator, mElments)
+    solvingSingleValuedOperator(miniOperatorList, miniElementList)
 
     //By DMAS Law
-    calculateByDMAS("^", mOperator, mElments)
-    calculateByDMAS("/", mOperator, mElments)
-    calculateByDMAS("*", mOperator, mElments)
-    calculateByDMAS("+", mOperator, mElments)
-    calculateByDMAS("-", mOperator, mElments)
+    calculateByDMAS("^", miniOperatorList, miniElementList)
+    calculateByDMAS("/", miniOperatorList, miniElementList)
+    calculateByDMAS("*", miniOperatorList, miniElementList)
+    calculateByDMAS("+", miniOperatorList, miniElementList)
+    calculateByDMAS("-", miniOperatorList, miniElementList)
 
-    elements.splice(opening - 1, 0, mElments.shift())
+    elements.splice(opening - 1, 0, miniElementList.shift())
 }

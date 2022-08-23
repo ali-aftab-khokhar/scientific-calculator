@@ -1,6 +1,6 @@
 function displayHistory(description){
-    var ul = document.getElementById("list")
-    var li = document.createElement("li")
+    let ul = document.getElementById("list")
+    let li = document.createElement("li")
     li.id = description
     li.addEventListener("click", EditData, false)
     li.appendChild(document.createTextNode(description))

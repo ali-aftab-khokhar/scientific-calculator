@@ -1,6 +1,6 @@
 function calculate(){
-    var x = document.getElementById("answer");
-    var array = x.value.split(" ")
+    let x = document.getElementById("answer");
+    let array = x.value.split(" ")
     array = array.filter(n => n)
 
     //Elements Array
@@ -41,8 +41,8 @@ function calculate(){
     calcAddAndSub(operators, elements)
 
     //Displaying On Console
-    var tempHist = x.value
-    var calculatedAnswer = elements.shift()
+    let tempHist = x.value
+    let calculatedAnswer = elements.shift()
     if (calculatedAnswer % 1 !== 0){
         x.value = calculatedAnswer.toFixed(4)
     }

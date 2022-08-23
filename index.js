@@ -1,6 +1,6 @@
-function values(el){
+function onChangeGetValue(el){
     let x = document.getElementById("answer");
-    var old = x.value;
+    let old = x.value;
     if (!parseInt(el.value) && parseInt(el.value) !== 0){
         x.value = old + " " + el.value + " ";
     }

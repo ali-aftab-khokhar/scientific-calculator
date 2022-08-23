@@ -3,9 +3,9 @@ const constants = {
     'e' : 2.7182
 }
 const variable = {}
-var variableExists = false
-var varEntry = null
-var elements = []
-var operators = []
-var mOperator = []
-var mElments = []
+let variableExists = false
+let varEntry = null
+let elements = []
+let operators = []
+let miniOperatorList = []
+let miniElementList = []
