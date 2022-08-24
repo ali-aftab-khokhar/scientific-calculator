@@ -3,31 +3,42 @@ function solvingParanthesis(operators, elements){
     let elemOpenCount = 0
     let closing = 0
     let i
+    let elementOpening = 0
     for (i = 0; i < operators.length; i += 1){
         if (operators[i] === '('){
             opening = i
         }
-        else if (elemOpenCount < opening && operators[i] !== '(' && operators !== ")"){
+    }
+    for (i = 0; i < opening; i++){
+        if (operators[i] != '(' && operators[i] != ')'){
+            elementOpening += 1
+        }
+    }
+    for (i = opening; i < operators.length; i++){
+        if (operators[i] !== '(' && operators[i] !== ')'){
             elemOpenCount += 1
+        }
+        if (operators[i] === ')'){
+            break
         }
     }
     for (i = opening; i < operators.length; i += 1){
         if (operators[i] == ')'){
             closing = i
-            miniArray(opening, closing, elemOpenCount - 1)
+            miniArray(opening, elementOpening, closing - opening)
         }
     }
 }
 
-function miniArray(opening, closing, elemOpenCount){
-    miniOperatorList = operators.splice(opening, closing - 1)
+function miniArray(opening, elementOpening, elemOpenCount){
+    miniOperatorList = operators.splice(opening, elemOpenCount + 1)
     if (miniOperatorList[0] === '('){
         miniOperatorList.shift()
     }
     if (miniOperatorList[miniOperatorList.length - 1] === ')' || miniOperatorList[miniOperatorList.length - 1] === ''){
         miniOperatorList.pop()
     }
-    miniElementList = elements.splice(elemOpenCount, closing - opening)
+    miniElementList = elements.splice(elementOpening, elemOpenCount)
 
     //Solving Single Valued Operator
     solvingSingleValuedOperator(miniOperatorList, miniElementList)
@@ -36,8 +47,8 @@ function miniArray(opening, closing, elemOpenCount){
     calculateByDMAS("^", miniOperatorList, miniElementList)
     calculateByDMAS("/", miniOperatorList, miniElementList)
     calculateByDMAS("*", miniOperatorList, miniElementList)
-    calculateByDMAS("+", miniOperatorList, miniElementList)
-    calculateByDMAS("-", miniOperatorList, miniElementList)
+    calcAddAndSub(miniOperatorList, miniElementList)
+    calcAddAndSub(miniOperatorList, miniElementList)
 
-    elements.splice(opening - 1, 0, miniElementList.shift())
+    elements.splice(elementOpening, 0, miniElementList.shift())
 }
